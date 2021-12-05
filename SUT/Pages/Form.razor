@@ -1,0 +1,47 @@
+﻿@page "/form"
+@using System.Text.RegularExpressions
+@using ContentManagement
+
+<h3>Form</h3>
+
+<div class = "form-div">
+    <p>Surname</p>
+    <input type="text" class="form-control" id="surnameInput" @bind=surname/>
+</div>
+
+<div class = "form-div">
+    <p>Name</p>
+    <input type="text" class="form-control" id="nameInput" @bind=name/>
+</div>
+
+<div class = "form-div">
+    <button type="submit" value="Submit" class="btn-success" id="submitButton" @onclick="Submit">Submit </button>
+</div>
+
+<div class = "form-div">
+<p class = "form-p">
+    Entered Values:
+</p>
+Surname:
+<p id = "surnameEntry">
+    @SurnameEntry
+</p>
+Name: 
+<p id = "nameEntry">
+    @NameEntry
+</p>
+</div>
+
+@code {
+    string name = string.Empty;
+    string surname = string.Empty;
+
+    string? NameEntry { get; set; }
+    string? SurnameEntry { get; set; }
+
+    private void Submit()
+    {
+        NameEntry = name == string.Empty ? Warnings.MissingValueWarningMessage : Regex.IsMatch(name, "[^A-Za-z]") ? Warnings.MissingValueWarningMessage : name;
+        SurnameEntry = surname == string.Empty ? Warnings.MissingValueWarningMessage : Regex.IsMatch(name, "[^A-Za-z]") ? Warnings.MissingValueWarningMessage : surname;
+    }
+}
